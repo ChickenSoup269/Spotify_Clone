@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TitleCustom" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Chỉnh sửa code ở đây -->
+    <style name="ButtonWhite" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/white</item>
     </style>
 
-    <style name="ButtonCustom" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Chỉnh sửa code ở đây -->
-    </style>
-
-    <style name="TextViewCustom" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Chỉnh sửa code ở đây -->
+    <!-- Bo tròn cho các nút quay về, floatingActionButton    -->
+    <style name="rounded_FAB" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
 </resources>

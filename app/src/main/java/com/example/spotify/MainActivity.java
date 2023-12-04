@@ -9,7 +9,6 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     // Trang giới thiệu
-
     Button btnDangNhap_gioiThieu, btnDangKy_gioiThieu;
 
     @Override

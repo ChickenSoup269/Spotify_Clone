@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Spotify</string>
+    <string name="email">@Email</string>
+    <string name="nameUser">Tên người dùng</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirmPassword">Nhập lại mật khẩu</string>
 </resources>
