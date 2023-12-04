@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleCustom" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Chỉnh sửa code ở đây -->
+    </style>
+
+    <style name="ButtonCustom" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Chỉnh sửa code ở đây -->
+    </style>
+
+    <style name="TextViewCustom" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Chỉnh sửa code ở đây -->
+    </style>
+
+</resources>

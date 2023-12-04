@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Spotify" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/spotify</item>
+        <item name="android:windowBackground">@color/black_spotify</item>
+    </style>
+
+    <style name="Theme.Spotify" parent="Base.Theme.Spotify" />
+</resources>
