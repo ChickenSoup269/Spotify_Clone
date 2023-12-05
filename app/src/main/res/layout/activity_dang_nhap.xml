@@ -81,7 +81,7 @@
         app:srcCompat="@drawable/spotify" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/txInLayDangNhap_email"
         android:layout_width="376dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -92,12 +92,13 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             android:hint="@string/email" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/txInLayDangNhap_password"
         android:layout_width="376dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -110,6 +111,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:hint="@string/password" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,11 +164,11 @@
         android:layout_height="24dp"
         android:background="#00FFFFFF"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
+        app:layout_constraintBottom_toBottomOf="@+id/txInLayDangNhap_password"
+        app:layout_constraintEnd_toEndOf="@+id/txInLayDangNhap_password"
         app:layout_constraintHorizontal_bias="0.96"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayout2"
+        app:layout_constraintStart_toStartOf="@+id/txInLayDangNhap_password"
+        app:layout_constraintTop_toTopOf="@+id/txInLayDangNhap_password"
         app:layout_constraintVertical_bias="0.59000003"
         app:srcCompat="@drawable/eye_hide" />
 
@@ -175,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Spotify App"
-        android:textColor="@color/black_headphone"
+        android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

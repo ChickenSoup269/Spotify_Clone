@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class DangKy extends AppCompatActivity {
     // Đăng ký tài khoản
+    FloatingActionButton fabLayoutDangKy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,10 +18,10 @@ public class DangKy extends AppCompatActivity {
         addControls();
     }
     public void addEvents(){
-
+        fabLayoutDangKy = (FloatingActionButton) findViewById(R.id.fabLayoutDangKy);
     }
 
     public void addControls(){
-
+        fabLayoutDangKy.setOnClickListener(v -> onBackPressed());
     }
 }
