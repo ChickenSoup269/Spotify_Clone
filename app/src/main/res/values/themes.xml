@@ -5,5 +5,10 @@
         <item name="android:windowBackground">@color/black_spotify</item>
     </style>
 
+    <style name="Theme.Login" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/spotify</item>
+        <item name="android:windowBackground">@color/spotify</item>
+    </style>
+
     <style name="Theme.Spotify" parent="Base.Theme.Spotify" />
 </resources>

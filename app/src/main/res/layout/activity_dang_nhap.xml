@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify"
     tools:context=".DangNhap">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -90,6 +89,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EdtTxPDangNhap_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -109,11 +109,26 @@
         app:layout_constraintVertical_bias="0.625">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EdtTxPDangNhap_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/password" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/imgButton_HideShow"
+        android:layout_width="25dp"
+        android:layout_height="24dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/txInLayDangNhap_password"
+        app:layout_constraintEnd_toEndOf="@+id/txInLayDangNhap_password"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="@+id/txInLayDangNhap_password"
+        app:layout_constraintTop_toTopOf="@+id/txInLayDangNhap_password"
+        app:layout_constraintVertical_bias="0.59000003"
+        app:srcCompat="@drawable/eye_hide" />
 
     <Button
         android:id="@+id/btnDangNhap"
@@ -157,20 +172,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.692" />
-
-    <ImageButton
-        android:id="@+id/imgButton_HideShow"
-        android:layout_width="25dp"
-        android:layout_height="24dp"
-        android:background="#00FFFFFF"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/txInLayDangNhap_password"
-        app:layout_constraintEnd_toEndOf="@+id/txInLayDangNhap_password"
-        app:layout_constraintHorizontal_bias="0.96"
-        app:layout_constraintStart_toStartOf="@+id/txInLayDangNhap_password"
-        app:layout_constraintTop_toTopOf="@+id/txInLayDangNhap_password"
-        app:layout_constraintVertical_bias="0.59000003"
-        app:srcCompat="@drawable/eye_hide" />
 
     <TextView
         android:id="@+id/textView3"
@@ -228,6 +229,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.938"
         app:srcCompat="@drawable/twitter" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify"
     tools:context=".TaoMoiMatKhau">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -90,6 +89,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EdtTxPTaoMoiMatKhau_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -104,9 +104,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63">
+        app:layout_constraintVertical_bias="0.62">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EdtTxPTaoMoiMatKhau_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
@@ -122,9 +123,10 @@
         app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75">
+        app:layout_constraintVertical_bias="0.74">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EdtTxPTaoMoiMatKhau_confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/confirmPassword"
@@ -144,10 +146,10 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.93" />
+        app:layout_constraintVertical_bias="0.92" />
 
     <CheckBox
-        android:id="@+id/checkLuuTaiKhoan"
+        android:id="@+id/checkTaoMoiMatKhau_xemMatKhau"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Xem mật khẩu"
@@ -158,7 +160,7 @@
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintVertical_bias="0.82" />
 
     <TextView
         android:id="@+id/textView3"
