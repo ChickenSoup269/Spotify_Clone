@@ -2,7 +2,9 @@ package com.example.spotify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -108,7 +110,6 @@ public class DangNhap extends AppCompatActivity {
             imgButton_HideShow.setVisibility(View.INVISIBLE);
             return true;
         }
-
     }
 
     private boolean validatePassword(){
@@ -148,5 +149,4 @@ public class DangNhap extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 }

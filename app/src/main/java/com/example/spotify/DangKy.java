@@ -2,6 +2,9 @@ package com.example.spotify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -121,7 +124,7 @@ public class DangKy extends AppCompatActivity {
     }
 
     private boolean validateConfirmPassword(){
-        String confirmPassword = Objects.requireNonNull(txInLayDangKy_confirmPassword.getEditText().getText().toString().trim());
+        String confirmPassword = Objects.requireNonNull(txInLayDangKy_confirmPassword.getEditText()).getText().toString().trim();
         String password = Objects.requireNonNull(txInLayDangKy_password.getEditText()).getText().toString().trim();
 
         if (confirmPassword.isEmpty()) {
@@ -145,5 +148,23 @@ public class DangKy extends AppCompatActivity {
         if(!validateNameUser() || !validateEmail() || !validatePassword() || !validateConfirmPassword())  {
             return;
         }
+
+//            // Tạo dialog thông báo thành công
+//            AlertDialog.Builder builder = new AlertDialog.Builder(DangKy.this);
+//            builder.setTitle("Đăng ký thành công");
+//            builder.setMessage("Bạn đã đăng ký thành công!");
+//
+//            // Nút OK để đóng dialog và chuyển qua activity đăng nhập
+//            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    Intent intent = new Intent(DangKy.this, DangNhap.class);
+//                    startActivity(intent);
+//                    dialog.dismiss();
+//                    finish(); // Đóng activity đăng ký sau khi chuyển qua đăng nhập
+//                }
+//            });
+//            // Hiển thị dialog
+//            AlertDialog dialog = builder.create();
+//            dialog.show();
     }
 }

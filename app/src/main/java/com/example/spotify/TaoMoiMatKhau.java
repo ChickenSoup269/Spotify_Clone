@@ -27,8 +27,8 @@ public class TaoMoiMatKhau extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tao_moi_mat_khau);
-        addEvents();
         addControls();
+        addEvents();
     }
 
     public void addControls(){
@@ -69,7 +69,6 @@ public class TaoMoiMatKhau extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private boolean validateEmail(){
@@ -95,10 +94,9 @@ public class TaoMoiMatKhau extends AppCompatActivity {
         if(password.isEmpty()){
             txInLayTaoMoiMatKhau_password.setError("Thiếu thông tin mật khẩu");
             return false;
-        }
-        else {
+        } else {
             txInLayTaoMoiMatKhau_password.setError(null);
-            return false;
+            return true;
         }
     }
 
@@ -109,12 +107,10 @@ public class TaoMoiMatKhau extends AppCompatActivity {
         if (confirmPassword.isEmpty()) {
             txInLayTaoMoiMatKhau_confirmPassword.setError("Thiếu thông tin xác nhận mật khẩu");
             return false;
-        }
-        else if (!confirmPassword.equals(password)) {
+        } else if (!confirmPassword.equals(password)) {
             txInLayTaoMoiMatKhau_confirmPassword.setError("Mật khẩu xác nhận không khớp");
             return false;
-        }
-        else {
+        } else {
             txInLayTaoMoiMatKhau_confirmPassword.setError(null);
             return true;
         }
