@@ -7,4 +7,5 @@
     <color name="spotify">#1DB954</color>
     <color name="black_spotify">#121212</color>
     <color name="black_headphone">#374750</color>
+    <color name="black_item">#575757</color>
 </resources>

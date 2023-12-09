@@ -24,6 +24,7 @@ public class TrangChu extends AppCompatActivity {
         setContentView(R.layout.activity_trang_chu);
         addControls();
         addEvents();
+        loadDefaultFragment();
     }
 
     public void addControls(){
@@ -51,24 +52,21 @@ public class TrangChu extends AppCompatActivity {
                 if (item.getItemId() == R.id.bottom_profile) {
                     selectedFragment = new FragmentProfile();
                 }
-
-                // Thay đổi Fragment hiển thị
                 if (selectedFragment != null) {
                     loadFragment(selectedFragment);
                 }
-
                 return true;
             }
         });
     }
 
-    // Phương thức hiển thị Fragment TrangChinhFragment khi ứng dụng khởi chạy
+    // Hiển thị Fragment FragmentTrangChinh khi vào trang
     private void loadDefaultFragment() {
         Fragment defaultFragment = new FragmentTrangChinh();
         loadFragment(defaultFragment);
     }
 
-    // Phương thức thay thế Fragment hiện tại bằng Fragment mới và thêm vào back stack
+    // Phương thức thay thế Fragment hiện tại bằng Fragment mới
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

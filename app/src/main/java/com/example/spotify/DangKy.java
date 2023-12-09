@@ -1,16 +1,20 @@
 package com.example.spotify;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -53,12 +57,14 @@ public class DangKy extends AppCompatActivity {
 
     public void addEvents(){
         fabLayoutDangKy.setOnClickListener(v -> onBackPressed());
+
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkDangKy(v);
             }
         });
+
         checkDangKy_xemMatKhau.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -73,11 +79,10 @@ public class DangKy extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private boolean validateNameUser(){
-        String nameUser = Objects.requireNonNull(txInLayDangKy_nameUser.getEditText().getText().toString().trim());
+        String nameUser = Objects.requireNonNull(txInLayDangKy_nameUser.getEditText()).getText().toString().trim();
 
         if(nameUser.isEmpty()){
             txInLayDangKy_nameUser.setError("Thiếu thông tin người dùng");
@@ -94,7 +99,7 @@ public class DangKy extends AppCompatActivity {
     }
 
     private boolean validateEmail(){
-        String email = Objects.requireNonNull(txInLayDangKy_email.getEditText().getText().toString().trim());
+        String email = Objects.requireNonNull(txInLayDangKy_email.getEditText()).getText().toString().trim();
 
         if(email.isEmpty()){
             txInLayDangKy_email.setError("Thiếu thông tin email");
@@ -111,7 +116,7 @@ public class DangKy extends AppCompatActivity {
     }
 
     private boolean validatePassword(){
-        String password = Objects.requireNonNull(txInLayDangKy_password.getEditText().getText().toString().trim());
+        String password = Objects.requireNonNull(txInLayDangKy_password.getEditText()).getText().toString().trim();
 
         if(password.isEmpty()){
             txInLayDangKy_password.setError("Thiếu thông tin mật khẩu");
@@ -142,29 +147,49 @@ public class DangKy extends AppCompatActivity {
     }
 
     public void checkDangKy(View view){
-        if(!validateNameUser() && !validateEmail() && !validatePassword() && !validateConfirmPassword()) {
+        if(!validateNameUser() && !validateEmail() && !validatePassword() && !validateConfirmPassword()
+                || !validateNameUser() || !validateEmail() || !validatePassword() || !validateConfirmPassword()) {
             return;
         }
-        if(!validateNameUser() || !validateEmail() || !validatePassword() || !validateConfirmPassword())  {
-            return;
+        else{
+            thongBaoDangKyThanhCong();
         }
+    }
 
-//            // Tạo dialog thông báo thành công
-//            AlertDialog.Builder builder = new AlertDialog.Builder(DangKy.this);
-//            builder.setTitle("Đăng ký thành công");
-//            builder.setMessage("Bạn đã đăng ký thành công!");
-//
-//            // Nút OK để đóng dialog và chuyển qua activity đăng nhập
-//            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int which) {
-//                    Intent intent = new Intent(DangKy.this, DangNhap.class);
-//                    startActivity(intent);
-//                    dialog.dismiss();
-//                    finish(); // Đóng activity đăng ký sau khi chuyển qua đăng nhập
-//                }
-//            });
-//            // Hiển thị dialog
-//            AlertDialog dialog = builder.create();
-//            dialog.show();
+    private void thongBaoDangKyThanhCong(){
+        ConstraintLayout successConstraintLayout =  findViewById(R.id.thongBaoDangKyThanhCong);
+        View view = LayoutInflater.from(DangKy.this).inflate(R.layout.thong_bao_dang_ky_thanh_cong, successConstraintLayout);
+        Button successDone = view.findViewById(R.id.btnDangKyThanhCong);
+        TextView txViewDiemNguoc = view.findViewById(R.id.txViewDiemNguoc);
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(DangKy.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        // Thời gian xuất hiện của thông báo -> hết time sang trang giới thiệu
+        new CountDownTimer(5000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                txViewDiemNguoc.setText("(" + millisUntilFinished / 1000 + ")");
+            }
+            public void onFinish() {
+                Intent intent = new Intent(DangKy.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }.start();
+        successDone.findViewById(R.id.btnDangKyThanhCong).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(DangKy.this, DangNhap.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        if (alertDialog.getWindow()!= null){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
+
     }
 }

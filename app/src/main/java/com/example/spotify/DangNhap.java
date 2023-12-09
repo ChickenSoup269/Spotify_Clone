@@ -2,6 +2,7 @@ package com.example.spotify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,12 @@ public class DangNhap extends AppCompatActivity {
     TextInputLayout txInLayDangNhap_email,txInLayDangNhap_password;
     TextInputEditText EdtTxPDangNhap_email, EdtTxPDangNhap_password;
     CheckBox checkBoxLuuTaiKhoan;
+    // Lưu thông tin tài khoản
+    SharedPreferences sharedPreferences;
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_REMEMBER_ME = "rememberMe";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,7 @@ public class DangNhap extends AppCompatActivity {
     }
 
     public void addControls(){
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         fabLayoutDangNhap = (FloatingActionButton) findViewById(R.id.fabLayoutDangNhap);
         txViewQuenMatKhau = (TextView) findViewById(R.id.txViewQuenMatKhau);
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
@@ -134,19 +142,20 @@ public class DangNhap extends AppCompatActivity {
             return;
         }
         else {
-            String email = Objects.requireNonNull(txInLayDangNhap_email.getEditText()).getText().toString();
-            String password = Objects.requireNonNull(txInLayDangNhap_password.getEditText()).getText().toString();
-
-            // Kiểm tra và lưu thông tin tài khoản nếu ô "Lưu tài khoản" được chọn
-            if (checkBoxLuuTaiKhoan.isChecked()) {
-                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("savedEmail", email);
-                editor.putString("savedPassword", password);
-                editor.apply();
-            }
+            luuThongTinTaiKhoan();
             Intent intent = new Intent(DangNhap.this, TrangChu.class);
             startActivity(intent);
+        }
+    }
+    private void luuThongTinTaiKhoan(){
+        if (sharedPreferences != null) {
+            if (sharedPreferences.getBoolean(KEY_REMEMBER_ME, false)) {
+                String savedEmail = sharedPreferences.getString(KEY_EMAIL, "");
+                String savedPassword = sharedPreferences.getString(KEY_PASSWORD, "");
+                EdtTxPDangNhap_email.setText(savedEmail);
+                EdtTxPDangNhap_password.setText(savedPassword);
+                checkBoxLuuTaiKhoan.setChecked(true);
+            }
         }
     }
 }

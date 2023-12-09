@@ -1,19 +1,27 @@
 package com.example.spotify;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+
 
 public class TaoMoiMatKhau extends AppCompatActivity {
     // Tạo mới mật khẩu
@@ -72,7 +80,7 @@ public class TaoMoiMatKhau extends AppCompatActivity {
     }
 
     private boolean validateEmail(){
-        String email = Objects.requireNonNull(txInLayTaoMoiMatKhau_email.getEditText().getText().toString().trim());
+        String email = Objects.requireNonNull(txInLayTaoMoiMatKhau_email.getEditText()).getText().toString().trim();
 
         if(email.isEmpty()){
             txInLayTaoMoiMatKhau_email.setError("Thiếu thông tin email");
@@ -89,7 +97,7 @@ public class TaoMoiMatKhau extends AppCompatActivity {
     }
 
     private boolean validatePassword(){
-        String password = Objects.requireNonNull(txInLayTaoMoiMatKhau_password.getEditText().getText().toString().trim());
+        String password = Objects.requireNonNull(txInLayTaoMoiMatKhau_password.getEditText()).getText().toString().trim();
 
         if(password.isEmpty()){
             txInLayTaoMoiMatKhau_password.setError("Thiếu thông tin mật khẩu");
@@ -101,16 +109,18 @@ public class TaoMoiMatKhau extends AppCompatActivity {
     }
 
     private boolean validateConfirmPassword(){
-        String confirmPassword = Objects.requireNonNull(txInLayTaoMoiMatKhau_confirmPassword.getEditText().getText().toString().trim());
+        String confirmPassword = Objects.requireNonNull(txInLayTaoMoiMatKhau_confirmPassword.getEditText()).getText().toString().trim();
         String password = Objects.requireNonNull(txInLayTaoMoiMatKhau_password.getEditText()).getText().toString().trim();
 
         if (confirmPassword.isEmpty()) {
             txInLayTaoMoiMatKhau_confirmPassword.setError("Thiếu thông tin xác nhận mật khẩu");
             return false;
-        } else if (!confirmPassword.equals(password)) {
+        }
+        else if (!confirmPassword.equals(password)) {
             txInLayTaoMoiMatKhau_confirmPassword.setError("Mật khẩu xác nhận không khớp");
             return false;
-        } else {
+        }
+        else {
             txInLayTaoMoiMatKhau_confirmPassword.setError(null);
             return true;
         }
@@ -123,5 +133,44 @@ public class TaoMoiMatKhau extends AppCompatActivity {
         if(!validateEmail() || !validatePassword() || !validateConfirmPassword())  {
             return;
         }
+        else{
+            thongBaoTaoMoiMatKhauThanhCong();
+        }
+    }
+
+    private void thongBaoTaoMoiMatKhauThanhCong(){
+        ConstraintLayout successConstraintLayout =  findViewById(R.id.thongBaoTaoMoiMatKhauThanhCong);
+        View view = LayoutInflater.from(TaoMoiMatKhau.this).inflate(R.layout.thong_bao_tao_moi_mat_khau_thanh_cong, successConstraintLayout);
+        Button successDone = view.findViewById(R.id.btnTaoMoiMatKhauThanhCong);
+        TextView txViewDiemNguoc = view.findViewById(R.id.txViewDiemNguoc);
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(TaoMoiMatKhau.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        // Thời gian xuất hiện của thông báo -> hết time sang trang giới thiệu
+        new CountDownTimer(5000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                txViewDiemNguoc.setText("(" + millisUntilFinished / 1000 + ")");
+            }
+            public void onFinish() {
+                Intent intent = new Intent(TaoMoiMatKhau.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }.start();
+        successDone.findViewById(R.id.btnTaoMoiMatKhauThanhCong).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(TaoMoiMatKhau.this, DangNhap.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        if (alertDialog.getWindow()!= null){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
     }
 }

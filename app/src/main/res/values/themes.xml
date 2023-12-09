@@ -3,6 +3,7 @@
     <style name="Base.Theme.Spotify" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/spotify</item>
         <item name="android:windowBackground">@color/black_spotify</item>
+        <item name="colorSecondaryContainer">#00FFFFFF</item>
     </style>
 
     <style name="Theme.Login" parent="Theme.Material3.DayNight.NoActionBar">
