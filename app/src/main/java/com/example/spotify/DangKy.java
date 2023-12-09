@@ -1,5 +1,6 @@
 package com.example.spotify;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,26 +10,42 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class DangKy extends AppCompatActivity {
-    // Đăng ký tài khoản
+    // *Đăng ký tài khoản
     FloatingActionButton fabLayoutDangKy;
     TextInputLayout txInLayDangKy_nameUser, txInLayDangKy_email, txInLayDangKy_password,txInLayDangKy_confirmPassword;
     TextInputEditText EdtTxPDangKy_nameUser, EdtTxPDangKy_email, EdtTxPDangKy_password, EdtTxPDangKy_confirmPassword;
     Button btnDangKy;
     CheckBox checkDangKy_xemMatKhau;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +55,7 @@ public class DangKy extends AppCompatActivity {
         addEvents();
     }
     public void addControls(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         fabLayoutDangKy = (FloatingActionButton) findViewById(R.id.fabLayoutDangKy);
         // TextInputLayout
         txInLayDangKy_nameUser = (TextInputLayout) findViewById(R.id.txInLayDangKy_nameUser);
@@ -124,7 +142,7 @@ public class DangKy extends AppCompatActivity {
         }
         else {
             txInLayDangKy_password.setError(null);
-            return false;
+            return true;
         }
     }
 
@@ -147,13 +165,76 @@ public class DangKy extends AppCompatActivity {
     }
 
     public void checkDangKy(View view){
-        if(!validateNameUser() && !validateEmail() && !validatePassword() && !validateConfirmPassword()
-                || !validateNameUser() || !validateEmail() || !validatePassword() || !validateConfirmPassword()) {
+        boolean allValid2 = !validateNameUser() || !validateEmail() || !validatePassword() || !validateConfirmPassword();
+        if (!validateNameUser() && !validateEmail() && !validatePassword() && !validateConfirmPassword()) {
             return;
         }
-        else{
-            thongBaoDangKyThanhCong();
+        else if(allValid2){
+            return;
         }
+        else {
+            dangKyTaiKhoan();
+        }
+    }
+
+    private void dangKyTaiKhoan(){
+        String nameUser = Objects.requireNonNull(txInLayDangKy_nameUser.getEditText()).getText().toString().trim();
+        String email = Objects.requireNonNull(txInLayDangKy_email.getEditText()).getText().toString().trim();
+        String password = Objects.requireNonNull(txInLayDangKy_password.getEditText()).getText().toString().trim();
+
+        mDatabase.child("users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    txInLayDangKy_email.setError("Email này đã tồn tại");
+                }
+                else {
+                    // ?Lấy giá trị số lượng user hiện tại
+                    String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+                    mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            // Tính số lượng người dùng hiện tại bằng cách đếm số lượng nút con của nút "users"
+                            int userCount = (int) dataSnapshot.getChildrenCount();
+                            // ?id user VD: user_1 -> _2 _3
+                            userCount++;
+
+                            String userId = "user_" + userCount;
+                            // Tạo đối tượng User mới
+                            User user = new User(userId, nameUser, email, hashedPassword);
+
+                            // lưu user vào Realtime Database
+                            mDatabase.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // User được đăng ký thành công
+                                        thongBaoDangKyThanhCong();
+                                        Log.d("DangKyActivity", "User information saved successfully.");
+                                        thongTinTaiKhoanCoBan(userId);
+                                    }
+                                    else {
+                                        // Lỗi khi lưu thông tin người dùng
+                                        Toast.makeText(DangKy.this, "Failed to save user information. " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Log.e("DangKyActivity", "Failed to save user information: " + task.getException().getMessage());
+                                    }
+                                }
+                            });
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(DangKy.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("DangKyActivity", "Database Error: " + databaseError.getMessage());
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(DangKy.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("DangKyActivity", "Database Error: " + databaseError.getMessage());
+            }
+        });
     }
 
     private void thongBaoDangKyThanhCong(){
@@ -190,6 +271,29 @@ public class DangKy extends AppCompatActivity {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
         alertDialog.show();
+
+    }
+
+    // Lấy ngày
+    private String formatDate(long millis) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return sdf.format(new Date(millis));
+    }
+
+    private void thongTinTaiKhoanCoBan(String userId) {
+        // Đưa thông tin user lên realtime database
+        String defaultUserImageURL = "https://cdn-icons-png.flaticon.com/512/3177/3177440.png";
+        String defaultBackgroundURL = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7d947e1c-d377-48d9-ab3e-6cfc41f6faa7/delgp3k-a94205d9-be04-4e4f-8865-71e321a55922.png/v1/fill/w_1192,h_670,q_70,strp/reflections_in_the_moonlight_by_gydw1n_delgp3k-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvN2Q5NDdlMWMtZDM3Ny00OGQ5LWFiM2UtNmNmYzQxZjZmYWE3XC9kZWxncDNrLWE5NDIwNWQ5LWJlMDQtNGU0Zi04ODY1LTcxZTMyMWE1NTkyMi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.Mc5Vmza2uAQR7zqKsObL2zh0PaXpdEU7MvtuhGGSodg";
+        String defaultPhone = "N/A";
+        String defaultSex = "N/A";
+        long dateCreated = System.currentTimeMillis();
+        String dateCreatedFormatted = formatDate(dateCreated);
+
+        mDatabase.child("users").child(userId).child("userImg").setValue(defaultUserImageURL);
+        mDatabase.child("users").child(userId).child("userBackground").setValue(defaultBackgroundURL);
+        mDatabase.child("users").child(userId).child("phone").setValue(defaultPhone);
+        mDatabase.child("users").child(userId).child("sex").setValue(defaultSex);
+        mDatabase.child("users").child(userId).child("dateCreated").setValue(dateCreatedFormatted);
 
     }
 }
