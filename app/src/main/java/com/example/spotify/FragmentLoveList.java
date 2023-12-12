@@ -9,12 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class FragmentLoveList extends Fragment {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    // Trang Fragment yêu thích
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -6,12 +6,7 @@
     tools:context=".FragmentProfile">
 
     <!-- TODO: Trang thông tin người dùng -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="ĐÂY LÀ TRANG CÁ NHÂN"
-        android:textColor="@color/white"
-        android:textSize="25dp"/>
+
+
 
 </FrameLayout>
