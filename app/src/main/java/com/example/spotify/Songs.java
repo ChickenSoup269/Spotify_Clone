@@ -1,6 +1,9 @@
 package com.example.spotify;
 
-public class Songs {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Songs implements Parcelable {
     String songId, title,artist, releaseDate, thumbnail, audio;
 
     public Songs(String songId, String title, String artist, String releaseDate, String thumbnail, String audio) {
@@ -16,6 +19,44 @@ public class Songs {
         this.songId = songId;
         this.title = title;
         this.thumbnail = thumbnail;
+    }
+    protected Songs(Parcel in) {
+        songId = in.readString();
+        title = in.readString();
+        artist = in.readString();
+        releaseDate = in.readString();
+        thumbnail = in.readString();
+        audio = in.readString();
+    }
+
+    public static final Creator<Songs> CREATOR = new Creator<Songs>() {
+        @Override
+        public Songs createFromParcel(Parcel in) {
+            return new Songs(in);
+        }
+
+        @Override
+        public Songs[] newArray(int size) {
+            return new Songs[size];
+        }
+    };
+
+    // Override writeToParcel method to write to Parcel
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(songId);
+        dest.writeString(title);
+        dest.writeString(artist);
+        dest.writeString(releaseDate);
+        dest.writeString(thumbnail);
+        dest.writeString(audio);
+    }
+
+    // Other methods
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public String getSongId() {return songId;}

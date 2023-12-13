@@ -14,6 +14,15 @@ public class FragmentListenMusic extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_listen_music, container, false);
+        View view = inflater.inflate(R.layout.fragment_listen_music, container, false);
+
+        // Lấy thông tin bài hát từ Bundle
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Songs selectedSong = bundle.getParcelable("selectedSong");
+            // Sử dụng thông tin của bài hát để hiển thị trong Fragment này
+        }
+
+        return view;
     }
 }

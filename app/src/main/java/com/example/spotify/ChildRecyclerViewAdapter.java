@@ -37,6 +37,7 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
         }
     }
 
+
     public ChildRecyclerViewAdapter(ArrayList<ChildModel> arrayList, Context mContext) {
         this.cxt = mContext;
         this.childModelArrayList = arrayList;
@@ -66,9 +67,8 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         Log.e("GlideError", "Error loading image: " + e.getMessage());
-                        // Hiển thị thông báo lỗi bằng Toast
                         Toast.makeText(cxt, "Error loading image", Toast.LENGTH_SHORT).show();
-                        return false; // Trả về false để Glide xử lý tiếp sau khi ghi log lỗi
+                        return false;
                     }
 
                     @Override
@@ -78,8 +78,6 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                 })
                 .into(holder.heroImage);
     }
-
-
 
     @Override
     public int getItemCount() {

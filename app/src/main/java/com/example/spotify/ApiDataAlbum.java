@@ -96,7 +96,6 @@ public class ApiDataAlbum extends AsyncTask<Void, Void, ArrayList<Album>> {
                 }
             }
         }
-
         return dataList;
     }
 

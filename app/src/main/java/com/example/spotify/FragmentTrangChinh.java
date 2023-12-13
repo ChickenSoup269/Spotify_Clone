@@ -1,5 +1,6 @@
 package com.example.spotify;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class FragmentTrangChinh extends Fragment {
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
     private SliderAdapter sliderAdapter;
+    private List<SliderItem> sliderItems;
     private ParentRecyclerViewAdapter parentAdapter;
 
     @Override
@@ -37,7 +40,7 @@ public class FragmentTrangChinh extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chinh, container, false);
         viewPager2 = view.findViewById(R.id.viewPagerImageSlider);
-
+        sliderItems = new ArrayList<>();
         // Set up buttons
         Button btnAll = view.findViewById(R.id.btnAll);
         Button btnAlbumAuMy = view.findViewById(R.id.btnAlbumAuMy);
@@ -113,6 +116,52 @@ public class FragmentTrangChinh extends Fragment {
                 super.onPageSelected(position);
                 sliderHandler.removeCallbacks(sliderRunnable);
                 sliderHandler.postDelayed(sliderRunnable, 5000);
+            }
+        });
+        viewPager2.setVisibility(View.GONE);
+        new ApiDataAlbum(new ApiDataAlbum.ApiDataListener() {
+            @Override
+            public void onDataFetched(ArrayList<Album> data) {
+                for (Album album : data) {
+                    String albumTitle = album.getAlbumTitle();
+                    ArrayList<Songs> songs = (ArrayList<Songs>) album.getSongs();
+
+                    SliderItem sliderItem = new SliderItem(); // Tạo mới SliderItem
+                    sliderItem.setImageUrl(album.getAlbumThumbnail());
+                    sliderItem.setAlbum(album); // Thiết lập album vào SliderItem
+
+                    // Thêm SliderItem vào danh sách sliderItems
+                    sliderItems.add(sliderItem);
+                }
+
+                // Cập nhật dữ liệu mới vào SliderAdapter
+                sliderAdapter.setSliderItems(sliderItems);
+                sliderAdapter.notifyDataSetChanged();
+                viewPager2.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Xử lý lỗi nếu có
+            }
+        }).execute();
+
+        sliderAdapter.setOnItemClickListener(new SliderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (position >= 0 && position < sliderItems.size()) {
+                    SliderItem selectedSliderItem = sliderItems.get(position);
+                    Album selectedAlbum = selectedSliderItem.getAlbum();
+
+                    // Truyền cả danh sách bài hát của album qua Intent
+                    ArrayList<Songs> songsInSelectedAlbum = (ArrayList<Songs>) selectedAlbum.getSongs();
+                    Intent intent = new Intent(requireContext(), AlbumDetaillActivity.class);
+                    intent.putExtra("selectedAlbum", selectedAlbum);
+                    intent.putExtra("danhSachBaiHat", songsInSelectedAlbum); // Truyền danh sách bài hát
+                    startActivity(intent);
+                } else {
+                    // Xử lý trường hợp không hợp lệ của position
+                }
             }
         });
 

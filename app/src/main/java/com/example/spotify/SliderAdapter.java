@@ -10,35 +10,44 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
 
-    private List<SliderItem> sliderItems  = new ArrayList<>();
+    private List<SliderItem> sliderItems = new ArrayList<>();
+    private ViewPagerItemClick itemClick;
     private ViewPager2 viewPager2;
     private OnItemClickListener itemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
     public SliderAdapter(ViewPager2 viewPager2) {
         this.viewPager2 = viewPager2;
     }
 
+    public interface ViewPagerItemClick {
+        void onItemClicked(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
+    public SliderAdapter(ViewPagerItemClick clickListener) {
+        this.itemClick = clickListener;
+    }
+
     public void setSliderItems(List<SliderItem> items) {
         this.sliderItems = items;
         notifyDataSetChanged();
-    }
-    public SliderAdapter(List<SliderItem> sliderItems, ViewPager2 viewPager2) {
-        this.sliderItems = sliderItems;
-        this.viewPager2 = viewPager2;
-    }
-    public SliderItem getItemAt(int position) {
-        if (sliderItems != null && position >= 0 && position < sliderItems.size()) {
-            return sliderItems.get(position);
-        }
-        return null;
     }
 
     @NonNull
@@ -51,7 +60,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
         if (sliderItems.size() == 0) {
-            return; // Return early if the list is empty
+            return;
         }
 
         SliderItem sliderItem = sliderItems.get(position % sliderItems.size());
@@ -60,36 +69,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         } else if (sliderItem.getImageUrl() != null) {
             holder.bindRemoteImage(sliderItem.getImageUrl());
         }
-
-        // Implement infinite scrolling
-        if (sliderItems.size() > 1) {
-            if (position == sliderItems.size() - 2) {
-                viewPager2.post(runnable);
-            }
-        }
-
-        // Set click listener for the item view
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    // Notify the click event to the listener
-                    if (itemClickListener != null) {
-                        itemClickListener.onItemClick(position % sliderItems.size());
-                    }
-                }
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        // Set a large number to simulate infinite scroll
-        return Integer.MAX_VALUE;
-    }
-    public List<SliderItem> getSliderItems() {
-        return sliderItems;
+            return Integer.MAX_VALUE;
     }
 
     class SliderViewHolder extends RecyclerView.ViewHolder {
@@ -99,6 +83,16 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         SliderViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageSlide);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && itemClickListener != null) {
+                        itemClickListener.onItemClick(position);
+                    }
+                }
+            });
         }
 
         void bindLocalImage(int imageResId) {
@@ -107,32 +101,14 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
         void bindRemoteImage(String imageUrl) {
             RequestOptions requestOptions = new RequestOptions()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) // Sử dụng cache tự động
+                    .override(400, Target.SIZE_ORIGINAL) // Kích thước chiều rộng 400, chiều cao tính tự động
+                    .centerCrop(); // Cắt ảnh để vừa với kích thước hiển thịs
 
             Glide.with(itemView.getContext())
                     .load(imageUrl)
                     .apply(requestOptions)
                     .into(imageView);
         }
-    }
-
-    // vòng lặp hình ảnh
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
-        }
-    };
-
-    public interface OnItemClickListener {
-        void onParentItemClicked(ParentModel parentModel);
-
-        void onItemClicked(ChildModel childModel);
-
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.itemClickListener = listener;
     }
 }

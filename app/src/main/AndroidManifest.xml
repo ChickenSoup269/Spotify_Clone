@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Spotify"
         tools:targetApi="31">
         <activity
+            android:name=".AlbumDetaillActivity"
+            android:exported="false" />
+        <activity
             android:name=".TrangChu"
             android:exported="false" />
         <activity
@@ -31,8 +34,8 @@
             android:theme="@style/Theme.Login" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.GioiThieu"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.GioiThieu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

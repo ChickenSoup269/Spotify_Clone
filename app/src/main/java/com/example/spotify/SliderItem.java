@@ -5,16 +5,19 @@ public class SliderItem {
     private String imageUrl;
     private String title;
     private String description;
+    private Album album;
+
 
     public SliderItem() {
 
     }
 
     // Constructor for local resource image
-    public SliderItem(int imageResId, String title, String description) {
+    public SliderItem(int imageResId, String title, String description, Album album) {
         this.imageResId = imageResId;
         this.title = title;
         this.description = description;
+        this.album = album;
     }
 
     public int getImageResId() {return imageResId;}
@@ -32,6 +35,10 @@ public class SliderItem {
     public String getDescription() {return description;}
 
     public void setDescription(String description) {this.description = description;}
+
+    public void setAlbum(Album album) {this.album = album;}
+
+    public Album getAlbum() {return album;}
 
 }
 
