@@ -1,17 +1,19 @@
 package com.example.spotify;
 
 public class ChildModel {
-    private  int hero_image;
-    private String movieName;
+    private  String hero_image;
+    private String songName;
 
-    public ChildModel(int hero_image, String movieName){
+    public ChildModel(){}
+
+    public ChildModel(String hero_image, String songName){
         this.hero_image = hero_image;
-        this.movieName = movieName;
+        this.songName = songName;
     }
-    public int getHeroImage() {
+    public String getHeroImage() {
         return hero_image;
     }
-    public String getMovieName() {
-        return movieName;
+    public String getSongName() {
+        return songName;
     }
 }

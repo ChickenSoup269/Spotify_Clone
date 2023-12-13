@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+
 public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecyclerViewAdapter.MyViewHolder> {
     private ArrayList<ParentModel> parentModelArrayList;
-    public Context cxt;
+    private Context cxt;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView category;
@@ -24,13 +25,14 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
 
             category = itemView.findViewById(R.id.Movie_category);
             childRecyclerView = itemView.findViewById(R.id.Child_RV);
+            // Set LayoutManager for childRecyclerView
+            childRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), RecyclerView.HORIZONTAL, false));
         }
     }
 
     public ParentRecyclerViewAdapter(ArrayList<ParentModel> exampleList, Context context) {
         this.parentModelArrayList = exampleList;
         this.cxt = context;
-
     }
 
     @Override
@@ -46,66 +48,24 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
         ParentModel currentItem = parentModelArrayList.get(position);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(cxt, LinearLayoutManager.HORIZONTAL, false);
-        holder.childRecyclerView.setLayoutManager(layoutManager);
-        holder.childRecyclerView.setHasFixedSize(true);
+        holder.category.setText(currentItem.getAlbumTitle());
 
-        holder.category.setText(currentItem.movieCategory());
-        ArrayList<ChildModel> arrayList = new ArrayList<>();
+        // Lấy danh sách các bài hát từ ParentModel
+        ArrayList<Songs> songs = currentItem.getSongs();
 
-        // added the first child row
-        if (parentModelArrayList.get(position).movieCategory().equals("Album Mùa Xuân")) {
-            arrayList.add(new ChildModel(R.drawable.twitter,"Movie Name"));
-            arrayList.add(new ChildModel(R.drawable.twitter,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.twitter,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.twitter,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.twitter,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.twitter,"Movie Name"));
+        // Chuyển đổi danh sách SongDetail sang danh sách ChildModel
+        ArrayList<ChildModel> childModels = new ArrayList<>();
+        for (Songs song : songs) {
+            ChildModel childModel = new ChildModel(song.getThumbnail(), song.getTitle());
+            childModels.add(childModel);
         }
 
-        // added in second child row
-        if (parentModelArrayList.get(position).movieCategory().equals("Album Mùa Hè")) {
-            arrayList.add(new ChildModel(R.drawable.facebook,"Movie Name"));
-            arrayList.add(new ChildModel(R.drawable.facebook,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.facebook,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.facebook,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.facebook,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.facebook,"Movie Name"));
-        }
-
-        // added in third child row
-        if (parentModelArrayList.get(position).movieCategory().equals("Album Tết")) {
-            arrayList.add(new ChildModel(R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel(R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-        }
-
-        // added in fourth child row
-        if (parentModelArrayList.get(position).movieCategory().equals("Album Gái Anime")) {
-            arrayList.add(new ChildModel(R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel(R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-        }
-
-        // added in fourth child row
-        if (parentModelArrayList.get(position).movieCategory().equals("Album Gái Anime")) {
-            arrayList.add(new ChildModel(R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel(R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-            arrayList.add(new ChildModel( R.drawable.test,"Movie Name"));
-        }
-
-        ChildRecyclerViewAdapter childRecyclerViewAdapter = new ChildRecyclerViewAdapter(arrayList,holder.childRecyclerView.getContext());
+        // Khởi tạo ChildRecyclerViewAdapter với danh sách các ChildModel
+        ChildRecyclerViewAdapter childRecyclerViewAdapter = new ChildRecyclerViewAdapter(childModels, cxt);
         holder.childRecyclerView.setAdapter(childRecyclerViewAdapter);
+        // Notify adapter after updating data
+        childRecyclerViewAdapter.notifyDataSetChanged();
     }
 }
+

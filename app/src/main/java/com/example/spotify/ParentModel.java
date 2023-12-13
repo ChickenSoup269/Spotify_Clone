@@ -1,12 +1,18 @@
 package com.example.spotify;
 
-public class ParentModel {
-    private String movieCategory;
+import java.util.ArrayList;
 
-    public ParentModel(String movieCategory) {
-        this.movieCategory = movieCategory;
+public class ParentModel {
+    private String albumTitle;
+    private ArrayList<Songs> songs;
+    public ParentModel(){}
+    public ParentModel(String albumTitle, ArrayList<Songs> songs) {
+        this.albumTitle = albumTitle;
+        this.songs = songs;
     }
-    public String movieCategory() {
-        return movieCategory;
-    }
+
+    public void setAlbumTitle(String albumTitle) {this.albumTitle = albumTitle;}
+    public String getAlbumTitle() {return albumTitle;}
+    public ArrayList<Songs> getSongs() {return songs;}
+    public void setSongs(ArrayList<Songs> songs) {this.songs = songs;}
 }

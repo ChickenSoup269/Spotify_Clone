@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Spotify" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/spotify</item>
+        <item name="colorPrimary">@color/black_spotify</item>
         <item name="android:windowBackground">@color/black_spotify</item>
         <item name="colorSecondaryContainer">#00FFFFFF</item>
     </style>
@@ -10,6 +10,12 @@
         <item name="colorPrimary">@color/spotify</item>
         <item name="android:windowBackground">@color/spotify</item>
     </style>
+
+    <style name="Theme.GioiThieu" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/spotify</item>
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
 
     <style name="Theme.Spotify" parent="Base.Theme.Spotify" />
 </resources>

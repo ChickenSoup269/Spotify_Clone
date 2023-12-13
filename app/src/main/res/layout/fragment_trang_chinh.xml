@@ -13,6 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="20dp"
             android:orientation="vertical">
 
             <androidx.viewpager2.widget.ViewPager2
@@ -20,8 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:paddingStart="60dp"
-                android:paddingEnd="60dp" />
+                android:paddingStart="100dp"
+                android:paddingEnd="100dp" />
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -39,62 +40,51 @@
                         android:layout_margin="10dp"
                         android:backgroundTint="@color/white"
                         android:padding="2dp"
-                        android:text="All"
+                        android:text="Tất cả"
                         android:textColor="@color/black"
                         app:cornerRadius="15px"  />
 
                     <Button
-                        android:id="@+id/btnPopular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:backgroundTint="@color/white"
-                        android:padding="5dp"
-                        android:text="Popular Movies"
-                        android:textColor="@color/black"
-                        app:cornerRadius="15px" />
-
-                    <Button
-                        android:id="@+id/btnkids"
+                        android:id="@+id/btnAlbumAuMy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:backgroundTint="@color/white"
                         android:padding="2dp"
-                        android:text="Kids"
+                        android:text="Top 5 Nhạc Âu Mỹ"
                         android:textColor="@color/black"
                         app:cornerRadius="15px" />
 
                     <Button
-                        android:id="@+id/btnAnime"
+                        android:id="@+id/btnAlbumNhacTre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="2dp"
                         android:layout_margin="10dp"
                         android:backgroundTint="@color/white"
-                        android:text="Anime"
+                        android:text="Top 5 Nhạc Trẻ"
                         android:textColor="@color/black"
                         app:cornerRadius="15px" />
 
                     <Button
-                        android:id="@+id/btnAction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:layout_margin="10dp"
-                        android:backgroundTint="@color/white"
-                        android:text="Action"
-                        android:textColor="@color/black"
-                        app:cornerRadius="15px" />
-
-                    <Button
-                        android:id="@+id/btnComedies"
+                        android:id="@+id/btnAlbumElectronic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="2dp"
                         android:backgroundTint="@color/white"
                         android:layout_margin="10dp"
-                        android:text="Comedies"
+                        android:text="Top 5 Electronic"
+                        android:textColor="@color/black"
+                        app:cornerRadius="15px" />
+
+                    <Button
+                        android:id="@+id/btnAlbumnNhacTruTinh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:backgroundTint="@color/white"
+                        android:layout_margin="10dp"
+                        android:text="Top 5 Nhạc Trữ Tình"
                         android:textColor="@color/black"
                         app:cornerRadius="15px" />
 

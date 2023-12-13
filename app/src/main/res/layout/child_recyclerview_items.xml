@@ -7,10 +7,11 @@
     android:layout_marginStart="16dp"
     android:layout_height="wrap_content"
     app:ignore="NamespaceTypo">
+
     <androidx.cardview.widget.CardView
-        android:layout_width="180dp"
-        android:layout_height="100dp"
-        app:cardCornerRadius="7dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        aap:cardCornerRadius="10dp"
         app:cardElevation="5dp">
         <ImageView
             android:id="@+id/hero_image"
@@ -24,9 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MovieTitle"
-        android:textColor="#C4DFEF"
-        android:textSize="12sp"
-        android:id="@+id/movie_name"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:id="@+id/song_name"
         android:layout_marginTop="5dp"
         android:layout_gravity="center" />
 </LinearLayout>
