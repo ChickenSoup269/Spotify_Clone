@@ -102,7 +102,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         void bindRemoteImage(String imageUrl) {
             RequestOptions requestOptions = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) // Sử dụng cache tự động
-                    .override(400, Target.SIZE_ORIGINAL) // Kích thước chiều rộng 400, chiều cao tính tự động
+                    .override(600, Target.SIZE_ORIGINAL) // Kích thước chiều rộng 400, chiều cao tính tự động
                     .centerCrop(); // Cắt ảnh để vừa với kích thước hiển thịs
 
             Glide.with(itemView.getContext())

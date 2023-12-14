@@ -1,5 +1,7 @@
 package com.example.spotify;
 
+import static java.lang.String.valueOf;
+import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FragmentListenMusic extends Fragment {
+    public static LoveList favoriteSong;
     private MediaPlayer mediaPlayer;
     private TextView txtSongName;
     private TextView txtArtistName;
@@ -31,6 +35,7 @@ public class FragmentListenMusic extends Fragment {
     private boolean isPlaying = true; // Biến để kiểm tra trạng thái play/pause nhạc
     private ImageButton imgButtonPlay, imgButtonNextSong, imgButtonAddLoveList;
     private FloatingActionButton fabLayoutNgheNhac;
+    private MusicViewModel musicViewModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,6 +49,17 @@ public class FragmentListenMusic extends Fragment {
         imgButtonNextSong = view.findViewById(R.id.img_btnNextward);
         imgButtonAddLoveList = view.findViewById(R.id.img_sound_add);
         fabLayoutNgheNhac = view.findViewById(R.id.fabLayoutNgheNhac);
+        musicViewModel = new ViewModelProvider(requireActivity()).get(MusicViewModel.class);
+
+
+        fabLayoutNgheNhac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Quay về Fragment trước đó
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                fragmentManager.popBackStack();
+            }
+        });
 
         // Nhận dữ liệu từ Bundle
         Bundle bundle = getArguments();
@@ -96,13 +112,12 @@ public class FragmentListenMusic extends Fragment {
                     if (bundle != null) {
                         String songImage = bundle.getString("thumbnail");
                         String songName = bundle.getString("title");
-                        Log.d("NOTIFICATION1", songImage + " " + songImage);
 
-                        // Tạo một đối tượng ChildModel mới từ dữ liệu bài hát
+                        // Tạo một đối tượng LoveList mới từ dữ liệu bài hát
                         LoveList favoriteSong = new LoveList(songImage, songName);
-                        Log.d("NOTIFICATION2", favoriteSong.toString());
-                        // Thêm bài hát vào FragmentLoveList
-//                        addToLoveList(favoriteSong);
+
+                        // Sử dụng ViewModel để chuyển dữ liệu sang FragmentLoveList
+                        musicViewModel.selectSong(favoriteSong);
                     }
                 }
             });

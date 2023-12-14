@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentSearch">
 
-    <!-- TODO: Trang tìm kiếm -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="332dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:src="@drawable/baseline_arrow_back_24" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="17dp" />
 
-        <SearchView
-            android:id="@+id/search_list"
-            android:layout_width="284dp"
-            android:layout_height="58dp"
-            android:background="@drawable/custom_search"
-            android:backgroundTint="#ffff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.874"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.062"
-            app:queryHint="Seach here .... " />
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="284dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="34dp"
+        android:padding="12dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Tìm kiếm"
+        android:textSize="14dp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatbtn_back"
-            android:layout_width="277dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#ffff"
-            android:clickable="true"
-            android:src="@drawable/back_search"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.065" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ryclerview_search"
-            android:layout_width="408dp"
-            android:layout_height="598dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+</RelativeLayout>

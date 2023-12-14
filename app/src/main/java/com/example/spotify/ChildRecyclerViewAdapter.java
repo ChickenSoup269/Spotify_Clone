@@ -110,6 +110,7 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                 transaction.commit();
             }
         });
+
     }
 
     @Override

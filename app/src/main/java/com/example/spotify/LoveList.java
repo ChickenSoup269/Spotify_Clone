@@ -17,4 +17,13 @@ public class LoveList {
         return songName;
     }
     public String getSongArtist() { return songArtist; }
+
+    @Override
+    public String toString() {
+        return "LoveList{" +
+                "songName='" + songName + '\'' +
+                ", heroImage='" + hero_image + '\'' +
+                // Other fields you want to include
+                '}';
+    }
 }
