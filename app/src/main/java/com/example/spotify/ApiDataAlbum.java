@@ -34,7 +34,7 @@ public class ApiDataAlbum extends AsyncTask<Void, Void, ArrayList<Album>> {
         BufferedReader reader = null;
 
         try {
-            URL url = new URL("https://6f198bba5dd7414594532bff4666c6b1.api.mockbin.io/");
+            URL url = new URL("https://b139d9db0c4c478c871449e27df6238f.api.mockbin.io/");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();

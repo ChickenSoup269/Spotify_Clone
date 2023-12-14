@@ -111,9 +111,9 @@ public class FragmentProfile extends Fragment {
                     @Override
                     public void onClick(View v) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Sign out confirmation");
-                        builder.setMessage("Are you sure you want to sign out?");
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        builder.setTitle("Đăng Xuất");
+                        builder.setMessage("Bạn có chắc muốn đăng xuất không");
+                        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Chuyển đến trang đăng nhập
@@ -123,7 +123,7 @@ public class FragmentProfile extends Fragment {
                                 getActivity().finish();
                             }
                         });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -137,7 +137,7 @@ public class FragmentProfile extends Fragment {
                 genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerGender.setAdapter(genderAdapter);
 
-                builder.setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Lưu thông tin", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String newUserName = edtUserName.getText().toString();

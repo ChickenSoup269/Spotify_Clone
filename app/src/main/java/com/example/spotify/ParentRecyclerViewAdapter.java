@@ -57,7 +57,7 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
         // Chuyển đổi danh sách SongDetail sang danh sách ChildModel
         ArrayList<ChildModel> childModels = new ArrayList<>();
         for (Songs song : songs) {
-            ChildModel childModel = new ChildModel(song.getThumbnail(), song.getTitle());
+            ChildModel childModel = new ChildModel(song.getThumbnail(), song.getTitle(), song.getArtist(), song.getAudio());
             childModels.add(childModel);
         }
 
@@ -68,4 +68,3 @@ public class ParentRecyclerViewAdapter extends RecyclerView.Adapter<ParentRecycl
         childRecyclerViewAdapter.notifyDataSetChanged();
     }
 }
-

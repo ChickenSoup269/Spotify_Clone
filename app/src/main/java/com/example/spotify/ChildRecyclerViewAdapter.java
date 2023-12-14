@@ -1,7 +1,9 @@
 package com.example.spotify;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -37,7 +41,6 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
         }
     }
 
-
     public ChildRecyclerViewAdapter(ArrayList<ChildModel> arrayList, Context mContext) {
         this.cxt = mContext;
         this.childModelArrayList = arrayList;
@@ -49,6 +52,7 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
         return new MyViewHolder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ChildModel currentItem = childModelArrayList.get(position);
@@ -67,8 +71,9 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         Log.e("GlideError", "Error loading image: " + e.getMessage());
+                        // Hiển thị thông báo lỗi bằng Toast
                         Toast.makeText(cxt, "Error loading image", Toast.LENGTH_SHORT).show();
-                        return false;
+                        return false; // Trả về false để Glide xử lý tiếp sau khi ghi log lỗi
                     }
 
                     @Override
@@ -77,6 +82,34 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                     }
                 })
                 .into(holder.heroImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lấy dữ liệu từ mục được nhấp vào
+                ChildModel currentItem = childModelArrayList.get(position);
+                String songImage = currentItem.getHeroImage();
+                String songName = currentItem.getSongName();
+                String artistName = currentItem.getSongArtist();
+                String songAudioUrl = currentItem.getSongAudio();
+
+                // Tạo FragmentListenMusic mới và truyền dữ liệu qua Bundle
+                FragmentListenMusic fragment = new FragmentListenMusic();
+                Bundle bundle = new Bundle();
+                bundle.putString("thumbnail", songImage);
+                bundle.putString("title", songName);
+                bundle.putString("artist", artistName);
+                bundle.putString("audio", songAudioUrl);
+                fragment.setArguments(bundle);
+
+                // Mở FragmentListenMusic bằng FragmentManager
+                FragmentManager fragmentManager = ((FragmentActivity) view.getContext()).getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragmentContainer, fragment);
+                transaction.addToBackStack(null);  // Để có thể quay lại Fragment trước đó nếu cần
+                transaction.commit();
+            }
+        });
     }
 
     @Override
