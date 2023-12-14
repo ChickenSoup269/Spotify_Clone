@@ -4,20 +4,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Songs implements Parcelable {
-    String songId, title,artist, releaseDate, thumbnail, audio;
+    String songId, title,artist, releaseDate, cover, thumbnail, audio;
 
-    public Songs(String songId, String title, String artist, String releaseDate, String thumbnail, String audio) {
+    public Songs(String songId, String title, String artist, String releaseDate, String cover, String thumbnail, String audio) {
         this.songId = songId;
         this.title = title;
         this.artist = artist;
         this.releaseDate = releaseDate;
+        this.cover = cover;
         this.thumbnail = thumbnail;
         this.audio = audio;
     }
 
-    public Songs(String songId, String title, String thumbnail) {
+    public Songs(String songId, String title, String cover, String thumbnail) {
         this.songId = songId;
         this.title = title;
+        this.cover = cover;
         this.thumbnail = thumbnail;
     }
     protected Songs(Parcel in) {
@@ -25,6 +27,7 @@ public class Songs implements Parcelable {
         title = in.readString();
         artist = in.readString();
         releaseDate = in.readString();
+        cover = in.readString();
         thumbnail = in.readString();
         audio = in.readString();
     }
@@ -48,6 +51,7 @@ public class Songs implements Parcelable {
         dest.writeString(title);
         dest.writeString(artist);
         dest.writeString(releaseDate);
+        dest.writeString(cover);
         dest.writeString(thumbnail);
         dest.writeString(audio);
     }
@@ -59,6 +63,8 @@ public class Songs implements Parcelable {
         return 0;
     }
 
+    public String getCover() {return cover;}
+    public void setCover(String cover) {this.cover = cover;}
     public String getSongId() {return songId;}
     public void setSongId(String songId) {this.songId = songId;}
     public String getTitle() {return title;}

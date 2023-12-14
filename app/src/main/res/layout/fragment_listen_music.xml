@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:background="#E1171616">
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabLayoutNgheNhac"
             android:layout_width="wrap_content"
@@ -176,9 +175,9 @@
             app:layout_constraintVertical_bias="0.90999997">
 
             <ImageView
-                android:id="@+id/image_playlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/image_playlist_cover"
+                android:layout_width="380dp"
+                android:layout_height="100dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/sliderview_music" />
         </androidx.cardview.widget.CardView>

@@ -34,7 +34,7 @@ public class ApiDataAlbum extends AsyncTask<Void, Void, ArrayList<Album>> {
         BufferedReader reader = null;
 
         try {
-            URL url = new URL("https://6bbf8a346dc642439c40dabcda57b646.api.mockbin.io/");
+            URL url = new URL("https://93985f875b3e4683a4a8a8fa6b9e7a6b.api.mockbin.io/");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -70,10 +70,11 @@ public class ApiDataAlbum extends AsyncTask<Void, Void, ArrayList<Album>> {
                     String title = songObject.getString("title");
                     String artist = songObject.getString("artist");
                     String releaseDate = songObject.getString("releaseDate");
+                    String cover = songObject.getString("cover");
                     String thumbnail = songObject.getString("thumbnail");
                     String audio = songObject.getString("audio");
 
-                    Songs song = new Songs(songId, title, artist, releaseDate, thumbnail, audio);
+                    Songs song = new Songs(songId, title, artist, releaseDate, cover ,thumbnail, audio);
                     songsList.add(song);
                 }
 

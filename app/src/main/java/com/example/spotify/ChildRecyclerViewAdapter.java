@@ -90,6 +90,7 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                 ChildModel currentItem = childModelArrayList.get(position);
                 String songImage = currentItem.getHeroImage();
                 String songName = currentItem.getSongName();
+                String cover = currentItem.getCover();
                 String artistName = currentItem.getSongArtist();
                 String songAudioUrl = currentItem.getSongAudio();
 
@@ -98,6 +99,7 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
                 Bundle bundle = new Bundle();
                 bundle.putString("thumbnail", songImage);
                 bundle.putString("title", songName);
+                bundle.putString("cover", cover);
                 bundle.putString("artist", artistName);
                 bundle.putString("audio", songAudioUrl);
                 fragment.setArguments(bundle);

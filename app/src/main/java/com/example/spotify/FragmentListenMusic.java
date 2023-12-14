@@ -31,7 +31,7 @@ public class FragmentListenMusic extends Fragment {
     private MediaPlayer mediaPlayer;
     private TextView txtSongName;
     private TextView txtArtistName;
-    private ImageView imgSong;
+    private ImageView imgSong, image_playlist_cover;
     private boolean isPlaying = true; // Biến để kiểm tra trạng thái play/pause nhạc
     private ImageButton imgButtonPlay, imgButtonNextSong, imgButtonAddLoveList;
     private FloatingActionButton fabLayoutNgheNhac;
@@ -45,12 +45,12 @@ public class FragmentListenMusic extends Fragment {
         txtSongName = view.findViewById(R.id.songNamePlayTextView);
         txtArtistName = view.findViewById(R.id.artistNamePlayTextView);
         imgSong = view.findViewById(R.id.image_song);
+        image_playlist_cover = view.findViewById(R.id.image_playlist_cover);
         imgButtonPlay = view.findViewById(R.id.img_btnPlayward);
         imgButtonNextSong = view.findViewById(R.id.img_btnNextward);
         imgButtonAddLoveList = view.findViewById(R.id.img_sound_add);
         fabLayoutNgheNhac = view.findViewById(R.id.fabLayoutNgheNhac);
         musicViewModel = new ViewModelProvider(requireActivity()).get(MusicViewModel.class);
-
 
         fabLayoutNgheNhac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +67,7 @@ public class FragmentListenMusic extends Fragment {
             String songImage = bundle.getString("thumbnail");
             String songName = bundle.getString("title");
             String artistName = bundle.getString("artist");
+            String cover = bundle.getString("cover");
             String songAudioUrl = bundle.getString("audio");
 
             // Hiển thị dữ liệu trên TextViews
@@ -77,6 +78,10 @@ public class FragmentListenMusic extends Fragment {
             Glide.with(this)
                     .load(songImage)
                     .into(imgSong);
+
+            Glide.with(this)
+                    .load(cover)
+                    .into(image_playlist_cover);
 
             // Khởi tạo và phát nhạc từ songAudioUrl sử dụng MediaPlayer
             mediaPlayer = new MediaPlayer();
